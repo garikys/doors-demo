@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Порог — официальный дилер дверей Velmora (демо)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F2ED; --paper:#FFFFFF; --ink:#1D1B19; --mut:#77716A; --line:#E4DED5;
+  --acc:#8A6A45; --acc2:#2F3B34; --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Manrope,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:"Cormorant Garamond",serif;font-weight:600;line-height:1.08;letter-spacing:-.01em}
+h2{font-size:clamp(34px,5vw,52px);margin-bottom:14px}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);font-weight:600;margin-bottom:12px}
+.lead{color:var(--mut);max-width:560px}
+section{padding:80px 0}
+
+/* demo bar */
+.demo{background:var(--acc2);color:#E9E4DA;font-size:12.5px;text-align:center;padding:7px 12px}
+
+/* header */
+header{position:sticky;top:0;z-index:40;background:rgba(245,242,237,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;justify-content:space-between;height:66px;gap:20px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo b{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:600;letter-spacing:.02em}
+.logo small{display:block;font-size:10.5px;color:var(--mut);letter-spacing:.08em;text-transform:uppercase;line-height:1.2}
+nav.main{display:flex;gap:26px;font-size:14px;font-weight:500}
+nav.main a:hover{color:var(--acc)}
+.hd-r{display:flex;align-items:center;gap:14px}
+.phone{font-weight:700;font-size:15px;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;padding:0 22px;border-radius:999px;font-weight:600;font-size:14.5px;transition:.2s}
+.btn-d{background:var(--ink);color:#fff}.btn-d:hover{background:var(--acc)}
+.btn-o{border:1px solid var(--ink)}.btn-o:hover{background:var(--ink);color:#fff}
+.burger{display:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--line)}
+@media(max-width:900px){nav.main,.hd-r .btn{display:none}.burger{display:inline-flex;align-items:center;justify-content:center}.phone{font-size:14px}}
+.mnav{display:none;position:fixed;inset:66px 0 auto 0;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 20px 24px;z-index:39}
+.mnav.open{display:block}
+.mnav a{display:block;padding:14px 0;border-bottom:1px solid var(--line);font-size:17px;font-weight:500}
+
+/* hero */
+.hero{padding:56px 0 70px}
+.hero-g{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(46px,7vw,86px)}
+.hero h1 em{font-style:italic;color:var(--acc)}
+.hero p{margin:22px 0 30px;font-size:17px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.stats{display:flex;gap:34px;margin-top:44px;flex-wrap:wrap}
+.stats b{font-family:"Cormorant Garamond",serif;font-size:40px;display:block;line-height:1}
+.stats span{font-size:13px;color:var(--mut)}
+.hero-art{position:relative;aspect-ratio:4/5;border-radius:24px;background:linear-gradient(160deg,#E8E1D6,#D9CFC0);overflow:hidden;display:flex;align-items:flex-end;justify-content:center}
+.hero-art .wall{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 119px,rgba(0,0,0,.025) 119px 120px)}
+.hero-art .floor{position:absolute;left:0;right:0;bottom:0;height:16%;background:linear-gradient(#B89A78,#A4855F)}
+.hero-art svg{position:relative;height:78%;margin-bottom:16%;filter:drop-shadow(0 18px 30px rgba(0,0,0,.18))}
+.badge{position:absolute;top:20px;left:20px;background:#fff;border-radius:999px;padding:8px 14px;font-size:12.5px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.06);z-index:2}
+@media(max-width:900px){.hero-g{grid-template-columns:1fr}.hero-art{aspect-ratio:1/1;order:-1}}
+
+/* benefits */
+.ben{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+.ben div{background:var(--paper);border-radius:var(--r);padding:24px;border:1px solid var(--line)}
+.ben i{font-style:normal;font-family:"Cormorant Garamond",serif;font-size:30px;color:var(--acc)}
+.ben h3{font-family:Manrope;font-size:16px;font-weight:700;margin:8px 0 6px}
+.ben p{font-size:14px;color:var(--mut)}
+@media(max-width:900px){.ben{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.ben{grid-template-columns:1fr}}
+
+/* catalog */
+.cat-top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.filters{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--paper);font-size:14px;font-weight:500}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.sort{height:40px;border:1px solid var(--line);border-radius:999px;padding:0 14px;background:var(--paper);font:inherit;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+.card{background:var(--paper);border-radius:var(--r);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;transition:.25s;cursor:pointer}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(40,30,20,.08)}
+.card .img{background:#EFEAE2;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;position:relative}
+.card .img svg{height:84%}
+.tag{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;background:var(--acc);color:#fff;border-radius:6px;padding:3px 8px}
+.card .b{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card .s{font-size:12px;color:var(--mut)}
+.card h3{font-family:Manrope;font-size:16px;font-weight:700}
+.card .sw{display:flex;gap:5px;margin:6px 0}
+.card .sw span{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.12)}
+.card .p{margin-top:auto;font-weight:700;font-size:17px}
+.card .p small{font-weight:400;color:var(--mut);font-size:12px}
+.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:40px}
+
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(20,18,16,.55);z-index:60;display:none;align-items:center;justify-content:center;padding:16px}
+.ov.open{display:flex}
+.modal{background:var(--paper);border-radius:22px;max-width:920px;width:100%;max-height:92vh;overflow:auto;display:grid;grid-template-columns:1fr 1fr;position:relative}
+.modal .vis{background:#EFEAE2;display:flex;align-items:center;justify-content:center;padding:30px;min-height:420px}
+.modal .vis svg{height:380px;max-height:60vh;transition:.3s}
+.modal .inf{padding:34px 30px}
+.modal h3{font-size:38px;margin:4px 0 10px}
+.x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:var(--bg);font-size:20px;z-index:2}
+.opt{margin:18px 0}
+.opt label{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--mut);font-weight:600;display:block;margin-bottom:8px}
+.cols{display:flex;gap:10px;flex-wrap:wrap}
+.cols button{width:34px;height:34px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
+.cols button.on{box-shadow:0 0 0 2px var(--ink)}
+.cname{font-size:13px;color:var(--mut);margin-top:6px}
+.sizes{display:flex;gap:8px;flex-wrap:wrap}
+.sizes button{height:36px;padding:0 12px;border-radius:10px;border:1px solid var(--line);font-size:13.5px}
+.sizes button.on{border-color:var(--ink);background:var(--ink);color:#fff}
+.specs{font-size:14px;margin:14px 0;border-top:1px solid var(--line)}
+.specs div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)}
+.specs span{color:var(--mut)}
+.mprice{font-size:28px;font-weight:700;margin:14px 0}
+@media(max-width:760px){.modal{grid-template-columns:1fr}.modal .vis{min-height:300px}.modal .vis svg{height:280px}.modal .inf{padding:24px 20px}}
+
+/* calc */
+.calc{background:var(--acc2);color:#EFEAE0;border-radius:28px;padding:50px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.calc h2{color:#fff}
+.calc .lead{color:#B9BFB6}
+.field{margin-bottom:18px}
+.field label{display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px;color:#CFD3CA}
+.field label b{color:#fff}
+input[type=range]{width:100%;accent-color:#C8A97E}
+.seg{display:flex;background:rgba(255,255,255,.08);border-radius:999px;padding:4px}
+.seg button{flex:1;height:38px;border-radius:999px;font-size:13.5px;color:#CFD3CA}
+.seg button.on{background:#fff;color:var(--ink);font-weight:600}
+.chk{display:flex;align-items:center;gap:10px;font-size:14.5px;margin:10px 0;cursor:pointer}
+.chk input{width:18px;height:18px;accent-color:#C8A97E}
+.total{background:rgba(255,255,255,.06);border-radius:18px;padding:26px;display:flex;flex-direction:column;justify-content:space-between}
+.total .row{display:flex;justify-content:space-between;font-size:14.5px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.total .sum{font-family:"Cormorant Garamond",serif;font-size:54px;color:#fff;line-height:1;margin:18px 0 6px}
+.total .note{font-size:12.5px;color:#9FA79C;margin-bottom:18px}
+.btn-l{background:#C8A97E;color:var(--ink)}.btn-l:hover{background:#fff}
+@media(max-width:860px){.calc{grid-template-columns:1fr;padding:30px 22px;border-radius:22px}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:36px;border-top:1px solid var(--line)}
+.steps div{padding:24px 20px 0 0}
+.steps b{font-family:"Cormorant Garamond",serif;font-size:44px;color:var(--acc);display:block;line-height:1}
+.steps h3{font-family:Manrope;font-size:16px;margin:10px 0 6px}
+.steps p{font-size:14px;color:var(--mut)}
+@media(max-width:800px){.steps{grid-template-columns:1fr 1fr;gap:10px}}
+
+/* salons */
+.salons{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+.salon{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.salon h3{font-family:Manrope;font-size:17px;margin-bottom:6px}
+.salon p{font-size:14px;color:var(--mut)}
+.salon .m{display:inline-block;margin-top:12px;font-size:12px;background:var(--bg);border-radius:999px;padding:4px 10px}
+@media(max-width:800px){.salons{grid-template-columns:1fr}}
+
+/* faq */
+.faq{max-width:800px;margin-top:26px}
+.q{border-bottom:1px solid var(--line)}
+.q button{width:100%;text-align:left;padding:20px 0;font-size:17px;font-weight:600;display:flex;justify-content:space-between;gap:16px}
+.q button span{transition:.2s;font-size:22px;line-height:1}
+.q .a{max-height:0;overflow:hidden;transition:max-height .3s;color:var(--mut);font-size:15px}
+.q.open .a{max-height:200px;padding-bottom:20px}
+.q.open button span{transform:rotate(45deg)}
+
+/* form */
+.lead-f{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:50px}
+form{display:flex;flex-direction:column;gap:12px}
+form input,form select{height:52px;border:1px solid var(--line);border-radius:12px;padding:0 16px;font:inherit;font-size:15px;background:var(--bg)}
+form input:focus,form select:focus{outline:2px solid var(--acc);border-color:transparent}
+.err{color:#A2412F;font-size:13px;min-height:18px}
+.ok{display:none;text-align:center;padding:30px 10px}
+.ok b{font-family:"Cormorant Garamond",serif;font-size:34px;display:block;margin-bottom:6px}
+.small{font-size:12px;color:var(--mut)}
+@media(max-width:800px){.lead-f{grid-template-columns:1fr;padding:30px 22px}}
+
+footer{background:var(--ink);color:#A9A39B;padding:50px 0 30px;margin-top:40px;font-size:14px}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr;gap:30px}
+footer b{color:#fff}
+footer a:hover{color:#fff}
+.copy{border-top:1px solid #34302C;margin-top:34px;padding-top:20px;font-size:12.5px}
+@media(max-width:700px){.ft{grid-template-columns:1fr}}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;border-radius:999px;padding:12px 20px;font-size:14px;transition:.3s;z-index:80}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.fab{position:fixed;right:16px;bottom:16px;z-index:30;display:none}
+@media(max-width:900px){.fab{display:inline-flex;box-shadow:0 10px 24px rgba(0,0,0,.2)}}
+</style>
+</head>
+<body>
+
+<div class="demo">Демо-проект · бренд и цены вымышлены</div>
+
+<header>
+  <div class="wrap hd">
+    <a href="#top" class="logo" aria-label="Порог">
+      <svg width="30" height="34" viewBox="0 0 30 34"><rect x="3" y="1" width="24" height="32" rx="1.5" fill="none" stroke="#1D1B19" stroke-width="2"/><rect x="7" y="5" width="16" height="24" fill="#8A6A45"/><circle cx="20" cy="18" r="1.4" fill="#F5F2ED"/></svg>
+      <div><b>Порог</b><small>официальный дилер Velmora</small></div>
+    </a>
+    <nav class="main">
+      <a href="#catalog">Каталог</a><a href="#calc">Калькулятор</a><a href="#how">Как работаем</a><a href="#salons">Салоны</a><a href="#faq">Вопросы</a>
+    </nav>
+    <div class="hd-r">
+      <span class="phone">+7 (900) 000-00-00</span>
+      <a href="#order" class="btn btn-d">Вызвать замерщика</a>
+      <button class="burger" id="burger" aria-label="Меню">☰</button>
+    </div>
+  </div>
+</header>
+<div class="mnav" id="mnav">
+  <a href="#catalog">Каталог</a><a href="#calc">Калькулятор</a><a href="#how">Как работаем</a><a href="#salons">Салоны</a><a href="#faq">Вопросы</a><a href="#order">Вызвать замерщика</a>
+</div>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-g">
+    <div>
+      <div class="eyebrow">Межкомнатные и входные двери</div>
+      <h1>Двери фабрики Velmora <em>по ценам завода</em></h1>
+      <p class="lead">Официальный дилер: весь каталог фабрики, бесплатный замер, доставка и монтаж под ключ. Гарантия фабрики — 5 лет.</p>
+      <div class="hero-cta">
+        <a href="#catalog" class="btn btn-d">Смотреть каталог</a>
+        <a href="#calc" class="btn btn-o">Рассчитать стоимость</a>
+      </div>
+      <div class="stats">
+        <div><b>240+</b><span>моделей в наличии</span></div>
+        <div><b>3 дня</b><span>от замера до монтажа</span></div>
+        <div><b>5 лет</b><span>гарантия фабрики</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="wall"></div><div class="floor"></div>
+      <span class="badge">Новинка: коллекция «Linea»</span>
+      <svg id="heroDoor" viewBox="0 0 120 230"></svg>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="ben">
+      <div><i>01</i><h3>Цены фабрики</h3><p>Работаем напрямую с заводом, без наценок посредников.</p></div>
+      <div><i>02</i><h3>Бесплатный замер</h3><p>Замерщик приедет с образцами отделок и фурнитуры.</p></div>
+      <div><i>03</i><h3>Монтаж под ключ</h3><p>Собственная бригада установщиков, вывоз мусора.</p></div>
+      <div><i>04</i><h3>Гарантия 5 лет</h3><p>На полотна и коробки — гарантия фабрики, на монтаж — наша.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="catalog" style="padding-top:20px">
+  <div class="wrap">
+    <div class="cat-top">
+      <div><div class="eyebrow">Каталог</div><h2>Выберите дверь</h2></div>
+      <select class="sort" id="sort" aria-label="Сортировка">
+        <option value="pop">Сначала популярные</option>
+        <option value="asc">Сначала дешевле</option>
+        <option value="desc">Сначала дороже</option>
+      </select>
+    </div>
+    <div class="filters">
+      <div class="chips" id="fType"></div>
+      <div class="chips" id="fStyle"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section id="calc" style="padding-top:20px">
+  <div class="wrap">
+    <div class="calc">
+      <div>
+        <div class="eyebrow" style="color:#C8A97E">Калькулятор</div>
+        <h2>Сколько стоит комплект</h2>
+        <p class="lead" style="margin-bottom:28px">Предварительный расчёт. Точную стоимость менеджер назовёт после замера.</p>
+        <div class="field"><label>Класс двери</label>
+          <div class="seg" id="cClass"><button data-v="9900" class="on">Стандарт</button><button data-v="16900">Комфорт</button><button data-v="27900">Премиум</button></div>
+        </div>
+        <div class="field"><label>Количество дверей <b id="cQtyV">4</b></label><input type="range" id="cQty" min="1" max="15" value="4"></div>
+        <label class="chk"><input type="checkbox" id="cMount" checked> Монтаж — 3 500 ₽ за дверь</label>
+        <label class="chk"><input type="checkbox" id="cHw" checked> Фурнитура (ручки, петли, замок) — 2 800 ₽</label>
+        <label class="chk"><input type="checkbox" id="cDel"> Доставка и подъём — 2 500 ₽</label>
+      </div>
+      <div class="total">
+        <div>
+          <div class="row"><span>Полотна с коробкой</span><b id="tDoors"></b></div>
+          <div class="row"><span>Фурнитура</span><b id="tHw"></b></div>
+          <div class="row"><span>Монтаж</span><b id="tMount"></b></div>
+          <div class="row"><span>Доставка</span><b id="tDel"></b></div>
+          <div class="row" id="tDiscRow"><span>Скидка за комплект от 5 дверей, 7%</span><b id="tDisc"></b></div>
+        </div>
+        <div>
+          <div class="sum" id="tSum"></div>
+          <div class="note">Итог предварительный. Замер — бесплатно.</div>
+          <a href="#order" class="btn btn-l" id="calcCta">Зафиксировать цену</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="eyebrow">Как работаем</div>
+    <h2>От заявки до установки</h2>
+    <div class="steps">
+      <div><b>1</b><h3>Заявка</h3><p>Оставьте телефон — перезвоним за 15 минут в рабочее время.</p></div>
+      <div><b>2</b><h3>Замер</h3><p>Бесплатно, с образцами. Сразу фиксируем цену в договоре.</p></div>
+      <div><b>3</b><h3>Поставка</h3><p>Ходовые модели — со склада, под заказ — от 14 дней.</p></div>
+      <div><b>4</b><h3>Монтаж</h3><p>Установка за один день, уборка и вывоз упаковки.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="salons" style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Салоны</div>
+    <h2>Приходите посмотреть вживую</h2>
+    <p class="lead">В каждом салоне — образцы коллекций, все отделки и фурнитура.</p>
+    <div class="salons">
+      <div class="salon"><h3>Салон на Северной</h3><p>ул. Северная, 12 · ТЦ «Пример», 2 этаж</p><p>Ежедневно 10:00–21:00</p><span class="m">60 образцов</span></div>
+      <div class="salon"><h3>Салон на Садовой</h3><p>ул. Садовая, 45</p><p>Пн–Сб 10:00–20:00</p><span class="m">45 образцов</span></div>
+      <div class="salon"><h3>Склад-шоурум</h3><p>Промышленный пр-д, 3</p><p>Пн–Пт 9:00–18:00 · самовывоз</p><span class="m">весь склад</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Вопросы</div>
+    <h2>Частые вопросы</h2>
+    <div class="faq" id="faqList"></div>
+  </div>
+</section>
+
+<section id="order" style="padding-top:0">
+  <div class="wrap">
+    <div class="lead-f">
+      <div>
+        <div class="eyebrow">Бесплатный замер</div>
+        <h2>Вызовите замерщика</h2>
+        <p class="lead">Приедем в удобное время с образцами, поможем подобрать модель и зафиксируем цену.</p>
+      </div>
+      <div>
+        <form id="form" novalidate>
+          <input id="fName" placeholder="Ваше имя" autocomplete="name">
+          <input id="fPhone" placeholder="+7 (___) ___-__-__" inputmode="tel" autocomplete="tel">
+          <select id="fModel"><option value="">Модель — подберём на замере</option></select>
+          <div class="err" id="fErr"></div>
+          <button class="btn btn-d" type="submit" style="height:54px">Записаться на замер</button>
+          <p class="small">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+        </form>
+        <div class="ok" id="ok"><b>Заявка принята</b><p class="lead" style="margin:0 auto">Это демо-сайт, поэтому заявка никуда не отправлена. На реальном сайте она уйдёт менеджеру в Telegram или CRM.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="ft">
+      <div><b style="font-family:'Cormorant Garamond',serif;font-size:28px">Порог</b><p style="margin-top:8px;max-width:360px">Официальный дилер фабрики дверей Velmora. Продажа, замер, доставка и монтаж.</p></div>
+      <div><b>Покупателям</b><p style="margin-top:8px"><a href="#catalog">Каталог</a><br><a href="#calc">Калькулятор</a><br><a href="#faq">Вопросы</a></p></div>
+      <div><b>Контакты</b><p style="margin-top:8px">+7 (900) 000-00-00<br>info@example.ru<br>Ежедневно 10:00–21:00</p></div>
+    </div>
+    <div class="copy">© 2026 «Порог». Демо-проект: компания, фабрика, адреса и цены вымышлены.</div>
+  </div>
+</footer>
+
+<a href="#order" class="btn btn-d fab">Замер бесплатно</a>
+
+<div class="ov" id="ov" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="x" id="x" aria-label="Закрыть">×</button>
+    <div class="vis"><svg id="mDoor" viewBox="0 0 120 230"></svg></div>
+    <div class="inf">
+      <div class="eyebrow" id="mCol"></div>
+      <h3 id="mName"></h3>
+      <p class="lead" id="mDesc" style="font-size:15px"></p>
+      <div class="opt"><label>Цвет</label><div class="cols" id="mColors"></div><div class="cname" id="mCname"></div></div>
+      <div class="opt"><label>Размер полотна, мм</label><div class="sizes" id="mSizes"></div></div>
+      <div class="specs" id="mSpecs"></div>
+      <div class="mprice" id="mPrice"></div>
+      <button class="btn btn-d" id="mOrder" style="width:100%">Заказать замер с этой моделью</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const COLORS={
+  oak:{n:"Дуб натуральный",c:"#B68B5E"},walnut:{n:"Орех тёмный",c:"#5E4330"},white:{n:"Белый эмаль",c:"#F4F1EB"},
+  grey:{n:"Графит",c:"#4A4C4F"},sand:{n:"Песочный",c:"#D8C7AC"},sage:{n:"Шалфей",c:"#9AA693"},black:{n:"Чёрный матовый",c:"#232323"}
+};
+const DOORS=[
+ {id:1,name:"Linea 01",col:"Linea",type:"inter",style:"modern",pattern:"lines",price:14900,colors:["white","grey","sand"],pop:9,tag:"Новинка",desc:"Гладкое полотно с тонкими фрезерованными линиями. Скрытая коробка в комплекте.",cover:"Эмаль"},
+ {id:2,name:"Classic Duo",col:"Classica",type:"inter",style:"classic",pattern:"panels",price:18500,colors:["white","oak","walnut"],pop:8,desc:"Две филёнки и классический профиль. Подходит к любому классическому интерьеру.",cover:"Шпон дуба"},
+ {id:3,name:"Vetro",col:"Linea",type:"inter",style:"modern",pattern:"glass",price:16200,colors:["oak","grey","black"],pop:7,tag:"Хит",desc:"Полотно со вставкой из матового стекла — пропускает свет в коридор.",cover:"Экошпон"},
+ {id:4,name:"Piano",col:"Minimal",type:"inter",style:"minimal",pattern:"flat",price:11900,colors:["white","sand","sage","grey"],pop:10,desc:"Абсолютно гладкое полотно под покраску в цвет стен. Минимализм без лишнего.",cover:"Эмаль"},
+ {id:5,name:"Neoclassic",col:"Classica",type:"inter",style:"classic",pattern:"molding",price:22800,colors:["white","sand","sage"],pop:6,desc:"Молдинги и рамки в стиле неоклассики. Эмаль ручной покраски.",cover:"Эмаль"},
+ {id:6,name:"Loft Frame",col:"Industrial",type:"inter",style:"modern",pattern:"frame",price:24500,colors:["black","grey"],pop:5,desc:"Алюминиевая рамка и широкое стекло — для лофта и кухонь-гостиных.",cover:"Алюминий + стекло"},
+ {id:7,name:"Fortis S",col:"Fortis",type:"entry",style:"modern",pattern:"lines",price:38900,colors:["grey","black","oak"],pop:8,tag:"Тёплая",desc:"Входная дверь с терморазрывом для квартиры и дома. Два контура уплотнения.",cover:"МДФ 16 мм"},
+ {id:8,name:"Fortis Classic",col:"Fortis",type:"entry",style:"classic",pattern:"panels",price:42500,colors:["walnut","oak","black"],pop:6,desc:"Входная дверь с классической фрезеровкой, замки 3-го класса взломостойкости.",cover:"МДФ 16 мм"},
+ {id:9,name:"Fortis Minimal",col:"Fortis",type:"entry",style:"minimal",pattern:"flat",price:35900,colors:["white","grey","sage"],pop:7,desc:"Гладкая панель внутри, скрытые петли. Шумоизоляция 42 дБ.",cover:"МДФ 10 мм"},
+ {id:10,name:"Scala",col:"Minimal",type:"inter",style:"minimal",pattern:"lines",price:13400,colors:["white","sand","oak"],pop:6,desc:"Горизонтальные линии, алюминиевая кромка. Скрытая коробка — опция.",cover:"Эмаль"},
+ {id:11,name:"Arca",col:"Classica",type:"inter",style:"classic",pattern:"arch",price:20900,colors:["white","walnut","sand"],pop:5,desc:"Арочная филёнка — мягкий акцент для спальни или детской.",cover:"Шпон ясеня"},
+ {id:12,name:"Slide One",col:"Linea",type:"inter",style:"modern",pattern:"glass",price:27400,colors:["oak","white","black"],pop:4,tag:"Раздвижная",desc:"Раздвижная система с доводчиком. Экономит место в небольших квартирах.",cover:"Экошпон"}
+];
+const SIZES=["600×2000","700×2000","800×2000","900×2000"];
+
+function shade(hex,p){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;
+  const f=v=>Math.max(0,Math.min(255,Math.round(v+(p<0?v:255-v)*p)));return `rgb(${f(r)},${f(g)},${f(b)})`;}
+function doorSVG(pattern,hex){
+  const d=shade(hex,-.18),l=shade(hex,.12),light=parseInt(hex.slice(1),16)>0xBBBBBB;
+  const stroke=light?"rgba(0,0,0,.14)":"rgba(255,255,255,.12)";
+  let inner="";
+  const glass=`fill="url(#gl)"`;
+  if(pattern==="lines") for(let i=1;i<6;i++) inner+=`<line x1="22" x2="98" y1="${18+i*33}" y2="${18+i*33}" stroke="${stroke}" stroke-width="1.2"/>`;
+  if(pattern==="panels") inner=`<rect x="24" y="24" width="72" height="80" rx="2" fill="none" stroke="${stroke}" stroke-width="2"/><rect x="24" y="118" width="72" height="88" rx="2" fill="none" stroke="${stroke}" stroke-width="2"/><rect x="29" y="29" width="62" height="70" fill="${l}" opacity=".35"/><rect x="29" y="123" width="62" height="78" fill="${l}" opacity=".35"/>`;
+  if(pattern==="glass") inner=`<rect x="30" y="26" width="60" height="150" rx="2" ${glass} stroke="${d}" stroke-width="3"/>`;
+  if(pattern==="molding") inner=`<rect x="22" y="22" width="76" height="60" fill="none" stroke="${stroke}" stroke-width="2.5"/><rect x="30" y="30" width="60" height="44" fill="none" stroke="${stroke}" stroke-width="1"/><rect x="22" y="96" width="76" height="112" fill="none" stroke="${stroke}" stroke-width="2.5"/><rect x="30" y="104" width="60" height="96" fill="none" stroke="${stroke}" stroke-width="1"/>`;
+  if(pattern==="frame") inner=`<rect x="16" y="16" width="88" height="198" fill="url(#gl)"/><line x1="16" x2="104" y1="80" y2="80" stroke="${hex}" stroke-width="5"/><line x1="16" x2="104" y1="150" y2="150" stroke="${hex}" stroke-width="5"/>`;
+  if(pattern==="arch") inner=`<path d="M28 206 V70 A32 32 0 0 1 92 70 V206 Z" fill="${l}" opacity=".35" stroke="${stroke}" stroke-width="2"/>`;
+  return `<defs><linearGradient id="gl" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#E9EEF0"/><stop offset=".5" stop-color="#C9D2D6"/><stop offset="1" stop-color="#E2E8EA"/></linearGradient>
+  <linearGradient id="sh" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".08"/><stop offset=".15" stop-color="#000" stop-opacity="0"/><stop offset=".85" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".06"/></linearGradient></defs>
+  <rect x="2" y="2" width="116" height="226" rx="2" fill="${d}"/>
+  <rect x="8" y="8" width="104" height="220" fill="${hex}"/>
+  ${inner}
+  <rect x="8" y="8" width="104" height="220" fill="url(#sh)"/>
+  <rect x="94" y="112" width="14" height="4" rx="2" fill="${light?'#2a2a2a':'#D9C6A5'}"/>
+  <circle cx="98" cy="126" r="1.8" fill="${light?'#2a2a2a':'#D9C6A5'}"/>`;
+}
+const rub=n=>n.toLocaleString("ru-RU")+" ₽";
+const $=id=>document.getElementById(id);
+
+// hero door cycles colours
+let hc=0;const heroCols=["#B68B5E","#F4F1EB","#4A4C4F","#9AA693"];
+function hero(){$("heroDoor").innerHTML=doorSVG("lines",heroCols[hc++%heroCols.length]);}
+hero();setInterval(hero,3200);
+
+// filters
+const state={type:"all",style:"all",sort:"pop"};
+const TYPES=[["all","Все двери"],["inter","Межкомнатные"],["entry","Входные"]];
+const STYLES=[["all","Любой стиль"],["modern","Современный"],["classic","Классика"],["minimal","Минимализм"]];
+function chips(el,list,key){el.innerHTML=list.map(([v,t])=>`<button class="chip${state[key]===v?' on':''}" data-v="${v}">${t}</button>`).join("");
+  el.onclick=e=>{const b=e.target.closest("button");if(!b)return;state[key]=b.dataset.v;chips(el,list,key);render();};}
+chips($("fType"),TYPES,"type");chips($("fStyle"),STYLES,"style");
+$("sort").onchange=e=>{state.sort=e.target.value;render();};
+
+function render(){
+  let list=DOORS.filter(d=>(state.type==="all"||d.type===state.type)&&(state.style==="all"||d.style===state.style));
+  list.sort((a,b)=>state.sort==="asc"?a.price-b.price:state.sort==="desc"?b.price-a.price:b.pop-a.pop);
+  $("grid").innerHTML=list.length?list.map(d=>`<article class="card" data-id="${d.id}" tabindex="0">
+    <div class="img">${d.tag?`<span class="tag">${d.tag}</span>`:""}<svg viewBox="0 0 120 230">${doorSVG(d.pattern,COLORS[d.colors[0]].c)}</svg></div>
+    <div class="b"><span class="s">${d.type==="entry"?"Входная":"Межкомнатная"} · коллекция ${d.col}</span><h3>${d.name}</h3>
+    <div class="sw">${d.colors.map(c=>`<span style="background:${COLORS[c].c}" title="${COLORS[c].n}"></span>`).join("")}</div>
+    <div class="p"><small>от </small>${rub(d.price)}</div></div></article>`).join("")
+    :`<div class="empty">Таких моделей пока нет — попробуйте другой фильтр.</div>`;
+}
+render();
+$("grid").addEventListener("click",e=>{const c=e.target.closest(".card");if(c)openModal(+c.dataset.id);});
+$("grid").addEventListener("keydown",e=>{if(e.key==="Enter"){const c=e.target.closest(".card");if(c)openModal(+c.dataset.id);}});
+
+// modal
+let cur=null,curCol=null,curSize=1;
+function openModal(id){
+  cur=DOORS.find(d=>d.id===id);curCol=cur.colors[0];curSize=1;
+  $("mCol").textContent=`Коллекция ${cur.col}`;$("mName").textContent=cur.name;$("mDesc").textContent=cur.desc;
+  $("mSpecs").innerHTML=[["Тип",cur.type==="entry"?"Входная":"Межкомнатная"],["Покрытие",cur.cover],["Комплектация","полотно, коробка, наличники"],["Срок поставки",cur.pop>6?"со склада, 2–3 дня":"под заказ, 14 дней"]]
+    .map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join("");
+  updModal();$("ov").classList.add("open");document.body.style.overflow="hidden";
+}
+function updModal(){
+  $("mDoor").innerHTML=doorSVG(cur.pattern,COLORS[curCol].c);
+  $("mColors").innerHTML=cur.colors.map(c=>`<button class="${c===curCol?'on':''}" data-c="${c}" style="background:${COLORS[c].c}" aria-label="${COLORS[c].n}"></button>`).join("");
+  $("mCname").textContent=COLORS[curCol].n;
+  $("mSizes").innerHTML=SIZES.map((s,i)=>`<button class="${i===curSize?'on':''}" data-s="${i}">${s}</button>`).join("");
+  const p=cur.price+(curSize===3?2500:curSize===2?1200:0);
+  $("mPrice").textContent=rub(p);
+}
+$("mColors").onclick=e=>{const b=e.target.closest("button");if(b){curCol=b.dataset.c;updModal();}};
+$("mSizes").onclick=e=>{const b=e.target.closest("button");if(b){curSize=+b.dataset.s;updModal();}};
+function closeModal(){$("ov").classList.remove("open");document.body.style.overflow="";}
+$("x").onclick=closeModal;$("ov").onclick=e=>{if(e.target===$("ov"))closeModal();};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+$("mOrder").onclick=()=>{$("fModel").value=cur.id;closeModal();location.hash="order";toast(`Модель «${cur.name}» добавлена в заявку`);};
+
+// calculator
+const calc={price:9900};
+$("cClass").onclick=e=>{const b=e.target.closest("button");if(!b)return;[...$("cClass").children].forEach(x=>x.classList.remove("on"));b.classList.add("on");calc.price=+b.dataset.v;recalc();};
+["cQty","cMount","cHw","cDel"].forEach(id=>$(id).addEventListener("input",recalc));
+function recalc(){
+  const q=+$("cQty").value;$("cQtyV").textContent=q;
+  const doors=calc.price*q,hw=$("cHw").checked?2800*q:0,mount=$("cMount").checked?3500*q:0,del=$("cDel").checked?2500:0;
+  const disc=q>=5?Math.round(doors*.07):0;
+  $("tDoors").textContent=rub(doors);$("tHw").textContent=hw?rub(hw):"—";$("tMount").textContent=mount?rub(mount):"—";$("tDel").textContent=del?rub(del):"—";
+  $("tDiscRow").style.display=disc?"flex":"none";$("tDisc").textContent="−"+rub(disc);
+  $("tSum").textContent=rub(doors+hw+mount+del-disc);
+}
+recalc();
+
+// faq
+const FAQ=[["Сколько стоит замер?","Замер бесплатный в пределах города. Замерщик привозит образцы отделок и фурнитуры."],
+ ["Можно ли купить без монтажа?","Да. Двери можно забрать со склада самовывозом или заказать только доставку."],
+ ["Какая гарантия?","Гарантия фабрики на полотна и коробки — 5 лет, на наш монтаж — 2 года."],
+ ["Есть ли рассрочка?","Да, рассрочка без переплаты на 6 месяцев через банк-партнёр."]];
+$("faqList").innerHTML=FAQ.map(([q,a])=>`<div class="q"><button>${q}<span>+</span></button><div class="a">${a}</div></div>`).join("");
+$("faqList").onclick=e=>{const b=e.target.closest("button");if(b)b.parentElement.classList.toggle("open");};
+
+// form
+$("fModel").innerHTML+=DOORS.map(d=>`<option value="${d.id}">${d.name} — от ${rub(d.price)}</option>`).join("");
+$("fPhone").addEventListener("input",e=>{let v=e.target.value.replace(/\D/g,"");if(v.startsWith("8"))v="7"+v.slice(1);if(!v.startsWith("7"))v="7"+v;v=v.slice(0,11);
+  const p=v.slice(1);let s="+7";if(p.length)s+=" ("+p.slice(0,3);if(p.length>=3)s+=")";if(p.length>3)s+=" "+p.slice(3,6);if(p.length>6)s+="-"+p.slice(6,8);if(p.length>8)s+="-"+p.slice(8,10);e.target.value=s;});
+$("form").addEventListener("submit",e=>{e.preventDefault();
+  if($("fName").value.trim().length<2){$("fErr").textContent="Укажите, как к вам обращаться";return;}
+  if($("fPhone").value.replace(/\D/g,"").length<11){$("fErr").textContent="Проверьте номер телефона";return;}
+  $("fErr").textContent="";$("form").style.display="none";$("ok").style.display="block";});
+
+// misc
+$("burger").onclick=()=>$("mnav").classList.toggle("open");
+$("mnav").onclick=e=>{if(e.target.tagName==="A")$("mnav").classList.remove("open");};
+function toast(t){$("toast").textContent=t;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2600);}
+</script>
+</body>
+</html>
